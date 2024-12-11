@@ -3,6 +3,9 @@ import uvicorn
 from fastapi import FastAPI
 from mangum import Mangum
 from app.api.v1 import users, orders, products
+from app.core.logging import setup_logging
+
+logger = setup_logging()
 
 app = FastAPI()
 
@@ -14,6 +17,7 @@ app.include_router(products.router, prefix="/products", tags=["Products"])
 # Health check endpoint
 @app.get("/health", tags=["Health"])
 async def health_check():
+    logger.info(f"Health check has been requested")
     return {"status": "healthy"}
 
 

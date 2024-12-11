@@ -4,6 +4,9 @@ from app.services.product_service import ProductService
 from app.schemas.product_schema import Product, ProductCreate, ProductUpdate
 from app.core.dependencies import get_product_service
 
+from app.core.logging import setup_logging
+
+logger = setup_logging()
 router = APIRouter()
 
 
@@ -14,6 +17,7 @@ async def get_all_products(
     """
     Get a list of all products.
     """
+    logger.info(f"Fetching products")
     return await service.get_all_products()
 
 
@@ -25,8 +29,10 @@ async def get_product_by_id(
     """
     Get details of a product by its ID.
     """
+    logger.info(f"Fetching product with ID {product_id}")
     product = await service.get_product_by_id(product_id)
     if not product:
+        logger.warning(f"Product {product_id} not found")
         raise HTTPException(status_code=404, detail="Product not found")
     return product
 
@@ -39,6 +45,7 @@ async def create_product(
     """
     Create a new product.
     """
+    logger.info(f"Creating a product")
     return await service.create_product(product_create)
 
 
