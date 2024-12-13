@@ -1,7 +1,13 @@
+# Read variables from .env
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
+
 # Variables
-APP_NAME = fastapi-dynamodb-app
-REGION = <your-aws-region>
-ACCOUNT_ID = <your-aws-account-id>
+#APP_NAME = $(APP_NAME)
+REGION = $(AWS_REGION)
+ACCOUNT_ID = $(AWS_ACCOUNT_ID)
 IMAGE_NAME = $(ACCOUNT_ID).dkr.ecr.$(REGION).amazonaws.com/$(APP_NAME)
 
 # Environment Management
@@ -26,7 +32,7 @@ test:
 	pytest
 
 # Build and run the Docker container locally
-build-docker:
+build:
 	docker build -t $(APP_NAME) .
 
 run-docker:
