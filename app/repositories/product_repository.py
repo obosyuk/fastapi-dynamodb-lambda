@@ -1,5 +1,10 @@
 import boto3
+import uuid
+from datetime import datetime
 from app.models.product import ProductModel
+from app.core.logging import setup_logging
+
+logger = setup_logging()
 
 
 class ProductRepository:
@@ -15,7 +20,14 @@ class ProductRepository:
         return response.get("Item")
 
     async def save_product(self, name, description, price, stock):
-        product = ProductModel(name=name, description=description, price=price, stock=stock)
+        product = ProductModel(
+            id=str(uuid.uuid4()),
+            name=name,
+            description=description,
+            price=price,
+            stock=stock,
+            created_at=datetime.now()
+        )
         self.table.put_item(Item=product.dict())
         return product
 
