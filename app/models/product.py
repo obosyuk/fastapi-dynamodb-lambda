@@ -1,8 +1,7 @@
-import uuid
-from typing import Optional
-from pydantic import BaseModel, Field
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+
+from pydantic import BaseModel, Field
 
 
 class ProductModel(BaseModel):
@@ -18,7 +17,7 @@ class ProductModel(BaseModel):
     def dict(self, **kwargs):
         item_dict = super().dict(**kwargs)
         # item_dict['id'] = str(uuid.uuid4())
-        item_dict['created_at'] = str(item_dict['created_at'].isoformat())
+        item_dict["created_at"] = str(item_dict["created_at"].isoformat())
         return item_dict
 
     # @root_validator(pre=True)

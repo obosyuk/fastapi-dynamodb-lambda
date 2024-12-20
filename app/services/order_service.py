@@ -1,7 +1,7 @@
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 
-from app.schemas.order_schema import OrderCreate, Order
 from app.repositories.order_repository import OrderRepository
+from app.schemas.order_schema import Order, OrderCreate
 
 
 class OrderService:
@@ -12,7 +12,7 @@ class OrderService:
         order = await self.repository.save_order(
             user_id=order_create.user_id,
             total_price=order_create.total_price,
-            status=order_create.status
+            status=order_create.status,
         )
         return Order(
             id=order.id,
@@ -20,5 +20,5 @@ class OrderService:
             total_price=order.total_price,
             status=order.status,
             created_at=datetime.now(UTC),
-            updated_at=None
+            updated_at=None,
         )

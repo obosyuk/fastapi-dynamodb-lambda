@@ -1,6 +1,8 @@
-from app.models.user import UserModel
-import boto3
 import uuid
+
+import boto3
+
+from app.models.user import UserModel
 
 
 class UserRepository:

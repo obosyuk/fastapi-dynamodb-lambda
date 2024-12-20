@@ -1,8 +1,18 @@
-from jose import jwt, JWTError
+import requests
 from fastapi import HTTPException, Request
+from jose import JWTError, jwt
+from pydantic import BaseModel
 
 from app.core.config import settings
-import requests
+from app.core.logging import setup_logging
+
+logger = setup_logging()
+
+
+class User(BaseModel):
+    user_id: str
+    groups: list[str]
+
 
 # Cognito JWKS URL
 COGNITO_JWKS_URL = (
@@ -33,7 +43,8 @@ def decode_token(token: str):
             issuer=f"https://cognito-idp.{settings.aws_region}.amazonaws.com/{settings.aws_cognito_user_pool_id}",
         )
         return decoded_token
-    except JWTError:
+    except JWTError as e:
+        logger.error(e)
         raise HTTPException(status_code=403, detail="Token validation failed")
 
 

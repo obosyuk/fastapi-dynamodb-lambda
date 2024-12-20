@@ -1,6 +1,5 @@
 from app.repositories.product_repository import ProductRepository
-from app.schemas.product_schema import ProductCreate, ProductUpdate, Product
-from datetime import datetime
+from app.schemas.product_schema import ProductCreate, ProductUpdate
 
 
 class ProductService:

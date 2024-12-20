@@ -1,7 +1,6 @@
-# app/logging_config.py
 import logging
-import sys
 import os
+import sys
 
 
 def setup_logging():

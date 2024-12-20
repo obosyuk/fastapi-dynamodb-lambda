@@ -1,8 +1,10 @@
-import boto3
 import uuid
 from datetime import datetime
-from app.models.product import ProductModel
+
+import boto3
+
 from app.core.logging import setup_logging
+from app.models.product import ProductModel
 
 logger = setup_logging()
 
@@ -26,12 +28,14 @@ class ProductRepository:
             description=description,
             price=price,
             stock=stock,
-            created_at=datetime.now()
+            created_at=datetime.now(),
         )
         self.table.put_item(Item=product.dict())
         return product
 
-    async def update_product(self, product_id, name=None, description=None, price=None, stock=None):
+    async def update_product(
+        self, product_id, name=None, description=None, price=None, stock=None
+    ):
         # Update logic with conditional expressions for atomicity
         ...
 
